@@ -1,0 +1,10 @@
+node_modules/
+
+*.mp4
+*.log
+*.env
+
+data/*.json
+images/
+
+dmp/
