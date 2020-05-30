@@ -17,4 +17,5 @@ Instructions to Run
 2. Start the Server: `node server.js`.
 3. Navigate to a class.
 4. Open the _Developer Tools_ and select the network tab.
-5. Watch the output in the server that was started.
+5. Click an class video.
+6. Watch the output in the server that was started.
