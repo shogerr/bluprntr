@@ -7,7 +7,6 @@ chrome.devtools.network.onRequestFinished.addListener(function(request) {
   if (request.request.url.includes('k.m3u8')) {
     chrome.tabs.query({active:true, audible: true}, function(tab) {
       chrome.tabs.sendMessage(tab[0].id, {action: "getDOM"}, function(response) {
-        console.log(response);
         if (!isOpen(ws)) return;
         ws.send(JSON.stringify({
           series: response.series,
@@ -19,19 +18,4 @@ chrome.devtools.network.onRequestFinished.addListener(function(request) {
       });
     });
   }
-
-  /*
-  var data = {};
-
-  // get request data
-  data.url = request.request.url;
-  data.size = request.response.content.size;
-  data.type = request.response.content.mimeType;
-  data.time = request.time;
-  data.start = request.startedDateTime;
-
-  console.log(data);
-  */
-  // send data to server
-    //socket.emit('data', data);
 });

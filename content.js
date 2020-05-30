@@ -12,21 +12,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       }
     });
 
-    let tracks = document.querySelector('#episodes > div[data-playlistitemactive="true"] > div.PlaylistItem-lead > div > div.PlaylistItem-title > span').innerText.trim();
-    tracks = parseInt(tracks);
-    // > div.PlaylistItem-lead > div > div.PlaylistItem-title > span");
-    //div[data-playlistitemplaying=true]
-    //tracks = tracks.querySelector("div.PlaylistItem-title");
-    //.getElementsByTagName('span')[0].innerText;
-    console.log(tracks);
-    let track = 4;
+    let track = document.querySelector('#episodes > div[data-playlistitemactive="true"] > div.PlaylistItem-lead > div > div.PlaylistItem-title > span').innerText.trim();
+    track = parseInt(track);
 
     sendResponse({
       series: document.querySelector("h2[data-identifier='VideoPage-headline']").innerHTML.trim(),
       episode: document.querySelector("h2[data-identifier='data-video-page-episode-name']").innerHTML.trim(),
-      track: tracks.toString(),
+      track: track,
       resources: resources.length > 0 ? resources : {},
-      debug: JSON.stringify(tracks)
+      debug: {}
     });
  }
  else
