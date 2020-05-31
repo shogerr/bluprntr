@@ -4,9 +4,11 @@ BluPrntr
 Requirements
 ------------
 
-### Install NodeJs
+### Install Node.js & `npm`
 
 #### Windows
+
+Using [Chocolatey](https://chocolatey.org/):
 
 ```powershell
 choco install nodejs
@@ -14,10 +16,10 @@ choco install nodejs
 
 #### Linux
 
-Install NodJs using a package manager, or comparable method.
+Install Node.js using a package manager, or comparable method.
 
-Install
--------
+Installation
+------------
 
 Run Yarn or npm to install node dependencies.
 
