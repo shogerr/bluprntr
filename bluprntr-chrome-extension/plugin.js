@@ -1,4 +1,3 @@
-//var socket = io.connect('ws://localhost:8888'); // your url for the request
 const ws = new WebSocket('ws://localhost:8888');
 
 function isOpen(socket) { return socket.readyState === socket.OPEN }

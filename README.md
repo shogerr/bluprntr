@@ -4,7 +4,7 @@ BluPrntr
 Requirements
 ------------
 
-### Install Node.js and npm
+### Install Node.js and npm/yarn
 
 Make sure Node and npm are installed and in your system path. General instructions for Windows and Linux are provided.
 
