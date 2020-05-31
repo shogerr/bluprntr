@@ -10,13 +10,18 @@ const wss = new WebSocket.Server({ port: 8888 });
 
 require('dotenv').config();
 
-let downloadPath = process.env.BLUPRNTR_DOWNLOAD_PATH ?
-  process.env.BLUPRNTR_DOWNLOAD_PATH : process.env.HomeDrive + process.env.HomePath + "/Downloads/Bluprint";
-
+let downloadPath = '.';
+if (process.env.BLUPRNTR_DOWNLOAD_PATH) {
+  downloadPath = process.env.BLUPRNTR_DOWNLOAD_PATH;
+} else if (process.env.HomeDrive) {
+  downloadPath = process.env.HomeDrive + process.env.HomePath + "/Downloads/Bluprint";
+} else if (process.env.HOME) {
+  downloadPath = process.env.HOME + "/Downloads/Bluprint";
+}
 if (!fs.existsSync(downloadPath)) {
   fs.mkdir(downloadPath, err => {if (err) throw err;});
 }
-console.log('Downloading to, "' + downloadPath + '".');
+console.log('Downloading to: "' + downloadPath + '".');
 
 let dataFile = 'data/data.json';
 let collectionFile = 'data/collection.json';
