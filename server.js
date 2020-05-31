@@ -32,7 +32,9 @@ function downloadResources(resources, path) {
   if (resources.length > 0) {
     let resourcesPath = path + '/resources';
     if (!fs.existsSync(resourcesPath)) {
-      fs.mkdirSync(resourcesPath, err => {if (err) throw err;});
+      fs.mkdirSync(resourcesPath, err => {
+        if (err) throw err;
+      });
     }
 
     fs.readdir(resourcesPath, (err, items) => {
@@ -77,12 +79,13 @@ wss.on('connection', function connection(ws) {
         url: title.url,
         resources_downloaded: downloadResources(title.resources, seriesPath)
       });
+      fs.writeFileSync(dataFile, JSON.stringify([...titles], null, 2), 'utf-8');
     } else if (!titles.has(id)) {
       console.log("grabbing: " + filename);
       collection[title.series] = collection[title.series] || {};
       collection[title.series][title.episode] = {url: title.url};
 
-      const video = youtubedl(title.url, [], { cwd: seriesPath });
+      const video = youtubedl(title.url, [], { cwd: __dirname });
       video.on('info', function(info) {
         console.log('Starting download: ' + filename);
       });
@@ -93,7 +96,6 @@ wss.on('connection', function connection(ws) {
             throw err;
         });
       }
-      const options = { cwd: seriesPath };
       youtubedl.exec(title.url, ['--output', filename + '.%(ext)s'], { cwd: seriesPath }, function(err, output) {
         if (err)
           console.error(err);
