@@ -5,16 +5,16 @@ function isOpen(socket) { return socket.readyState === socket.OPEN; }
 
 chrome.devtools.network.onRequestFinished.addListener(request => {
   if (request.request.url.includes('k.m3u8')) {
-    chrome.tabs.query({active:true, audible: true}, tab => {
+    chrome.tabs.query({active:true, audible: true}, tabs => {
       // Check if the debugging mode is enabled.
       var port = chrome.runtime.connect({name: "debugging"});
       port.postMessage({debug: true});
       port.onMessage.addListener(msg => {
         if (msg.debug)
-          console.log(tab);
+          console.log(tabs);
       });
-      if (tab != undefined) {
-        chrome.tabs.sendMessage(tab[0].id, {action: "getDOM"}, response => {
+      if (tabs.length > 0) {
+        chrome.tabs.sendMessage(tabs[0].id, {action: "getDOM"}, response => {
           if (!isOpen(ws))
             return;
 

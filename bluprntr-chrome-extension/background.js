@@ -23,5 +23,5 @@ chrome.runtime.onConnect.addListener(port => {
 });
 
 const logDebuggingState = (tabId) => {
-  console.log(`Bluprintr Debugging is ${DEBUGGING?"enabled":"disabled"}`);
+  console.log(`BluPrntr debugging is ${DEBUGGING?"enabled":"disabled"}.`);
 };

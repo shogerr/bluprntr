@@ -14,14 +14,14 @@ let downloadPath = '.';
 if (process.env.BLUPRNTR_DOWNLOAD_PATH) {
   downloadPath = process.env.BLUPRNTR_DOWNLOAD_PATH;
 } else if (process.env.HomeDrive) {
-  downloadPath = process.env.HomeDrive + process.env.HomePath + "/Downloads/Bluprint";
+  downloadPath = `${process.env.HomeDrive}${process.env.HomePath}/Downloads/Bluprint`;
 } else if (process.env.HOME) {
-  downloadPath = process.env.HOME + "/Downloads/Bluprint";
+  downloadPath = `${process.env.HOME}/Downloads/Bluprint`;
 }
 if (!fs.existsSync(downloadPath)) {
   fs.mkdir(downloadPath, err => { if (err) throw err; });
 }
-console.log('Downloading to: "' + downloadPath + '".');
+console.log(`Downloading to, "${downloadPath}".`);
 
 let dataFile = 'data/data.json';
 let collectionFile = 'data/collection.json';
@@ -30,7 +30,7 @@ let collection = fs.existsSync(collectionFile) ? JSON.parse(fs.readFileSync(coll
 
 function downloadResources(resources, path) {
   if (resources.length > 0 && fs.existsSync(path)) {
-    let resourcesPath = path + '/resources';
+    let resourcesPath = `${path}/resources`;
     if (!fs.existsSync(resourcesPath)) {
       fs.mkdirSync(resourcesPath, err => {
         if (err) throw err;
@@ -45,7 +45,7 @@ function downloadResources(resources, path) {
               resource.title = entities.decode(resource.title);
               let filetype = response.headers['content-type'].match(/\/(.*)$/)[1];
               resource.title = resource.title.replace(/: |:/g, '꞉ ');
-              let filename = path + '/resources/' + resource.title + '.' + filetype;
+              let filename = `${path}/resources/${resource.title}.${filetype}`;
               filename = filename.replace(/"/g, '');
               console.log("Downloading: " + filename);
               fs.writeFileSync(filename, response.data);
@@ -87,7 +87,7 @@ wss.on('connection', function connection(ws) {
 
       const video = youtubedl(title.url, [], { cwd: __dirname });
       video.on('info', function(info) {
-        console.log('Starting download: ' + filename);
+        console.log('starting download: ' + filename);
       });
 
       if (!fs.existsSync(seriesPath)) {
