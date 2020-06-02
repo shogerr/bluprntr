@@ -1,6 +1,5 @@
 // jshint esversion:6
-
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action == "getDOM") {
     let resources = [];
     Array.from(document.querySelector("ul.VideoPage-materialLinks").getElementsByTagName("a")).forEach(el => {
@@ -12,8 +11,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       }
     });
 
-    let track = document.querySelector('#episodes > div[data-playlistitemactive="true"] > div.PlaylistItem-lead > div > div.PlaylistItem-title > span').innerText.trim();
-    track = parseInt(track);
+    let trackQuery = '#episodes > div[data-playlistitemactive="true"] > div.PlaylistItem-lead > div > div.PlaylistItem-title > span';
+    let track = document.querySelector(trackQuery).innerText.trim();
+    track = track ? parseInt(track) : -1;
 
     sendResponse({
       series: document.querySelector("h2[data-identifier='VideoPage-headline']").innerHTML.trim(),
@@ -24,5 +24,5 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     });
  }
  else
-  sendResponse({}); // Send nothing..
+  sendResponse({});
 });
