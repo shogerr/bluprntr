@@ -29,7 +29,7 @@ let titles = fs.existsSync(dataFile) ? new Map(JSON.parse(fs.readFileSync(dataFi
 let collection = fs.existsSync(collectionFile) ? JSON.parse(fs.readFileSync(collectionFile, 'utf8')) : {};
 
 function downloadResources(resources, path) {
-  if (resources.length > 0) {
+  if (resources.length > 0 && fs.existsSync(path)) {
     let resourcesPath = path + '/resources';
     if (!fs.existsSync(resourcesPath)) {
       fs.mkdirSync(resourcesPath, err => {
