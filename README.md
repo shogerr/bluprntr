@@ -64,7 +64,7 @@ Debugging
 
 A minimal test server is provided. It will only catch clicks sent from the Chrome extension and log the details to your terminal.
 
-```powershell
+```bash
 # Start the test server.
 yarn test-server
 ```
