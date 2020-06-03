@@ -4,43 +4,48 @@ BluPrntr
 Requirements
 ------------
 
-### Install Node.js and npm/yarn
-
-Make sure Node and npm are installed and in your system path. General instructions for Windows and Linux are provided.
+Ensure both **Node** and **npm** (or yarn) are installed and their installation location in your system path.
 
 #### Windows
 
-Using [Chocolatey](https://chocolatey.org/):
+Install using [Chocolatey](https://chocolatey.org/) or from the [Node.js](https://nodejs.org/en/) website.
 
 ```powershell
-choco install nodejs
+PS C:\> choco install nodejs
 ```
 
 #### Linux
 
-Install Node.js using a package manager, or comparable method.
+Install Node.js using a package manager or comparable method.
 
-Install Dependencies
---------------------
+Instructions
+------------
 
-Run Yarn or `npm` to install the node dependencies.
+Run Yarn or `npm` to install the node dependencies and start the server.
 
 ```bash
+# Install the dependencies (only needed once),
 yarn install
-# or
+
+# and start the server.
+yarn start
+
+# Instead of yarn, npm can be used.
 npm install
+npm start
 ```
 
-Instructions to Run
--------------------
+### Set Download Path
 
 The environment variable `BLUPRNTR_DOWNLOAD_PATH` will be used as the download location.
 A `.env` file can also be used.
 
+### Detailed Instructions for Downloading Classes
+
 The following steps will download a class video to disk.
 
 1. Install the Chrome Extension (instructions in next section).
-2. Start the Server: `node server.js`.
+2. Start the Server (`yarn start`).
 3. Navigate to a class in Chrome.
 4. Open Chrome's _Developer Tools_ and select the network tab.
 5. Click a class video.
@@ -53,3 +58,15 @@ The following steps will download a class video to disk.
 3. Click **Load Unpacked Extension** and select the directory, `bluprntr-chrome-extension/`.
 
 More information: [What are Extensions? - Google Chrome](https://developer.chrome.com/extensions).
+
+Debugging
+---------
+
+A minimal test server is provided. It will only catch clicks sent from the Chrome extension and log the details to your terminal.
+
+```powershell
+# Start the test server.
+yarn test-server
+```
+
+_To be continued..._

@@ -9,6 +9,7 @@
     "http://*/*",
     "https://*/*"
   ],
+  /*
   "background": {
     "persistent": false,
     "scripts": ["background.js"]
@@ -16,6 +17,7 @@
   "browser_action": {
     "default_title": "Debug Mode"
   },
+  */
   "devtools_page": "devtools.html",
   "content_scripts": [
     {

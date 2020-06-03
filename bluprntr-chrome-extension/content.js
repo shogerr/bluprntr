@@ -1,4 +1,3 @@
-// jshint esversion:6
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action == "getDOM") {
     let resources = [];

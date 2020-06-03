@@ -1,4 +1,3 @@
-// jshint esversion:6
 let DEBUGGING = false;
 chrome.contextMenus.removeAll();
 chrome.contextMenus.create({
