@@ -61,6 +61,15 @@ The following steps will download a class video to disk.
 
 More information: [What are Extensions? - Google Chrome](https://developer.chrome.com/extensions).
 
+Conrtibuting
+------------
+
+If you have a nice line or two of code to contribue, please create a [Pull Request!](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
+
+A tip jar that bears ridiculous transaction fees!
+- BTC: 3KYBuFMpu9bfXpT1dm75cDuKkayHxwZyPP
+- ETH: 0x075051F7B7264fd6A2a1F2E53E50297b8D731136
+
 Debugging
 ---------
 
