@@ -1,7 +1,7 @@
 BluPrntr
 ========
 
-A Chrome extension to save your Bluprint classes while you watch!
+A Chrome extension (and local server) to save your Bluprint classes while you watch!
 
 Requirements
 ------------
