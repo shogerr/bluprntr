@@ -11,7 +11,7 @@ Ensure both **Node** and **npm** (or yarn) are installed and their installation 
 Install using [Chocolatey](https://chocolatey.org/) or from the [Node.js](https://nodejs.org/en/) website.
 
 ```powershell
-PS C:\> choco install nodejs
+choco install nodejs
 ```
 
 #### Linux
@@ -21,7 +21,7 @@ Install Node.js using a package manager or comparable method.
 Instructions
 ------------
 
-Run Yarn or `npm` to install the node dependencies and start the server.
+Run `yarn` or `npm` to install the node dependencies and start the server.
 
 ```bash
 # Install the dependencies (only needed once),
