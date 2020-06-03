@@ -18,6 +18,7 @@ Install `node` and `npm`/`yarn` using [Chocolatey](https://chocolatey.org/)**\**
 
 ```powershell
 choco install nodejs
+
 # Optionally install yarn.
 choco install yarn
 ```
