@@ -10,7 +10,7 @@ Ensure both **Node** and **npm** (or yarn) are installed and their installation 
 
 #### Windows
 
-Use the Windows installers from the [Node.js](https://nodejs.org/en/) website.
+Use the Windows installers from the Node.js [website](https://nodejs.org/en/).
 
 _-or-_
 
@@ -75,7 +75,7 @@ More information: [What are Extensions? - Google Chrome](https://developer.chrom
 Conrtibuting
 ------------
 
-If you have a nice line or two of code to contribue, please create a [Pull Request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests)!
+If you have a nice line or two of code to contribue, please create a [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests)!
 
 A tip jar that bears ridiculous transaction fees!
 - BTC: 3KYBuFMpu9bfXpT1dm75cDuKkayHxwZyPP
