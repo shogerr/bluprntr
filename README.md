@@ -10,13 +10,19 @@ Ensure both **Node** and **npm** (or yarn) are installed and their installation 
 
 #### Windows
 
-Install `node` and `npm`/`yarn` using [Chocolatey](https://chocolatey.org/) or with the Windows installers from the [Node.js](https://nodejs.org/en/) website.
+Use the Windows installers from the [Node.js](https://nodejs.org/en/) website.
+
+_-or-_
+
+Install `node` and `npm`/`yarn` using [Chocolatey](https://chocolatey.org/)**\***:
 
 ```powershell
 choco install nodejs
 # Optionally install yarn.
 choco install yarn
 ```
+
+**\*** `choco` is the preferred method.
 
 #### Linux
 
