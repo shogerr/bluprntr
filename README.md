@@ -35,6 +35,8 @@ npm install
 npm start
 ```
 
+Now as your brose Bluprnt classes, the videos you watch will be downloaded to your home directory or what has been set with `BLUPRNTR_DOWNLOAD_PATH`.
+
 ### Set Download Path
 
 The environment variable `BLUPRNTR_DOWNLOAD_PATH` will be used as the download location.
