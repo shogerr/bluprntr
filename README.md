@@ -64,7 +64,7 @@ More information: [What are Extensions? - Google Chrome](https://developer.chrom
 Conrtibuting
 ------------
 
-If you have a nice line or two of code to contribue, please create a [Pull Request!](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
+If you have a nice line or two of code to contribue, please create a [Pull Request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests)!
 
 A tip jar that bears ridiculous transaction fees!
 - BTC: 3KYBuFMpu9bfXpT1dm75cDuKkayHxwZyPP
