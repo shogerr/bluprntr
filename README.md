@@ -12,6 +12,8 @@ Install using [Chocolatey](https://chocolatey.org/) or from the [Node.js](https:
 
 ```powershell
 choco install nodejs
+# Optionally install yarn.
+choco install yarn
 ```
 
 #### Linux
