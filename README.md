@@ -46,7 +46,7 @@ npm install
 npm start
 ```
 
-Now as your brose Bluprnt classes, the videos you watch will be downloaded to your home directory or what has been set with `BLUPRNTR_DOWNLOAD_PATH`.
+Now as you browse Bluprnt classes, the videos you watch will be downloaded to your home directory or what has been set with `BLUPRNTR_DOWNLOAD_PATH`.
 
 ### Set Download Path
 
@@ -72,10 +72,10 @@ The following steps will download a class video to disk.
 
 More information: [What are Extensions? - Google Chrome](https://developer.chrome.com/extensions).
 
-Conrtibuting
+Contributing
 ------------
 
-If you have a nice line or two of code to contribue, please create a [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests)!
+If you have a nice line or two of code to contribute, please create a [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests)!
 
 A tip jar that bears ridiculous transaction fees!
 - BTC: 3KYBuFMpu9bfXpT1dm75cDuKkayHxwZyPP
