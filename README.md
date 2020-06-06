@@ -9,7 +9,7 @@ Requirements
 
 Ensure both **Node** and **npm** (or yarn) are installed and their installation location in your system path.
 
-#### Windows
+### Windows
 
 Use the Windows installers from the Node.js [website](https://nodejs.org/en/).
 
@@ -26,7 +26,7 @@ choco install yarn
 
 **\*** `choco` is the preferred method.
 
-#### Linux
+### Linux
 
 Install `node` and `npm`/`yarn` using a package manager or comparable method.
 
