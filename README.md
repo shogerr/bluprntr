@@ -2,6 +2,7 @@ BluPrntr
 ========
 
 A Chrome extension (and local server) to save your Bluprint classes while you watch!
+Works on a Windows, Linux or Mac machine.
 
 Requirements
 ------------
@@ -29,6 +30,11 @@ choco install yarn
 
 Install `node` and `npm`/`yarn` using a package manager or comparable method.
 
+### Mac
+
+For Mac, follow the instructions in the guide: [Installing Node.js® and NPM on Mac](https://treehouse.github.io/installation-guides/mac/node-mac.html),
+or use the Mac installer from Node.js [website](https://nodejs.org/en/).
+
 Instructions
 ------------
 
@@ -46,7 +52,7 @@ npm install
 npm start
 ```
 
-Now as you browse Bluprnt classes, the videos you watch will be downloaded to your home directory or what has been set with `BLUPRNTR_DOWNLOAD_PATH`.
+Now as you browse Bluprint classes, the videos you watch will be downloaded to your home directory or what has been set with `BLUPRNTR_DOWNLOAD_PATH`.
 
 ### Set Download Path
 
