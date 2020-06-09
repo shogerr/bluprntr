@@ -41,8 +41,11 @@ Instructions
 From the newly cloned folder,run `yarn` or `npm` to install the node dependencies and start the server.
 
 ```bash
+# Clone the project.
+git clone https://github.com/shogerr/bluprntr
+
 # Navigate to the bluprntr folder.
-cd ./bluprintr
+cd ./bluprntr
 
 # Install the dependencies (only needed once),
 yarn install
