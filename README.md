@@ -38,9 +38,12 @@ or use the Mac installer from Node.js [website](https://nodejs.org/en/).
 Instructions
 ------------
 
-Run `yarn` or `npm` to install the node dependencies and start the server.
+From the newly cloned folder,run `yarn` or `npm` to install the node dependencies and start the server.
 
 ```bash
+# Navigate to the bluprntr folder.
+cd ./bluprintr
+
 # Install the dependencies (only needed once),
 yarn install
 
@@ -64,7 +67,7 @@ A `.env` file can also be used.
 The following steps will download a class video to disk.
 
 1. Install the Chrome Extension (instructions in next section).
-2. Start the Server (`yarn start`).
+2. Start the Server (run `yarn start` from the git project folder).
 3. Navigate to a class in Chrome.
 4. Open Chrome's _Developer Tools_ and select the network tab.
 5. Click a class video.
