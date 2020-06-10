@@ -71,7 +71,7 @@ function downloadResources(resources, path) {
               let filename = `${path}/resources/${resource.title}.${filetype}`;
               filename = filename.replace(/"/g, '');
               log(green ('[downloaded]'), '(resource)', filename);
-              fs.writeFileSync(filename, response.data);
+              fs.writeFileSync(filename, response.data, 'binary');
             })
             .catch(err => {
               console.error(err);
