@@ -38,12 +38,20 @@ or use the Mac installer from Node.js [website](https://nodejs.org/en/).
 Instructions
 ------------
 
-From the newly cloned folder,run `yarn` or `npm` to install the node dependencies and start the server.
+The `start-bluprntr.sh`/`ps1` scripts can be used to start the server.
+
+Linux and Mac require you set `+x`, or execute permissions to run scripts. Instructions for running scripts in each OS:
+- [Linux](https://www.cyberciti.biz/faq/howto-run-a-script-in-linux/)
+- [Mac](https://support.apple.com/guide/terminal/make-a-file-executable-apdd100908f-06b3-4e63-8a87-32e71241bab4/mac)
+- [Windows](https://ss64.com/ps/syntax-run.html)
+
+If you are not familiar with the command line, please see this [codedemy article](https://www.codecademy.com/articles/command-line-setup).
+
+The explicit commands needed to run the application's server are provided below.
+
+Please note that all of the `npm`/`yarn` commands are to be run from the folder where BluPrntr was extracted or cloned.
 
 ```bash
-# Clone the project.
-git clone https://github.com/shogerr/bluprntr
-
 # Navigate to the bluprntr folder.
 cd ./bluprntr
 
