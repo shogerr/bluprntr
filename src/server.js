@@ -1,11 +1,11 @@
-const WebSocket = require('ws');
+const axios = require('axios');
+const Entities = require('html-entities').XmlEntities;
 const fs = require('fs');
 const path = require('path');
+const WebSocket = require('ws');
 const youtubedl = require('youtube-dl');
-const Entities = require('html-entities').XmlEntities;
-const axios = require('axios');
 const entities = new Entities();
-const { green, inverse, bgLightCyan, underline, dim, lightGray, darkGray, white, blue } = require ('ansicolor');
+const { green, underline, dim, lightGray, darkGray, white } = require ('ansicolor');
 const log = require('ololog').configure({
   locate: false,
   time: true,
@@ -63,7 +63,15 @@ function downloadResources(resources, path) {
       if (err) console.error(err);
       if (items.length < resources.length) {
         resources.forEach(resource => {
-          axios.get(resource.url, {headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36'}} )
+          axios.get(resource.url, {
+            responseType: 'arraybuffer',
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36',
+              'encoding': null,
+              'Content-Type': 'application/pdf',
+              'Accept': 'application/pdf'
+              }
+            })
             .then((response) => {
               resource.title = entities.decode(resource.title);
               let filetype = response.headers['content-type'].match(/\/(.*)$/)[1];
@@ -71,7 +79,11 @@ function downloadResources(resources, path) {
               let filename = `${path}/resources/${resource.title}.${filetype}`;
               filename = filename.replace(/"/g, '');
               log(green ('[downloaded]'), '(resource)', filename);
-              fs.writeFileSync(filename, response.data, 'binary');
+              try {
+                fs.writeFileSync(filename, new Buffer.from(response.data, 'binary'), 'binary');
+              } catch (err) {
+                console.error(err);
+              }
             })
             .catch(err => {
               console.error(err);
