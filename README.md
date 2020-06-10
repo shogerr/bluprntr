@@ -40,7 +40,8 @@ Instructions
 
 The `start-bluprntr.sh`/`ps1` scripts can be used to start the server.
 
-Linux and Mac require you set `+x`, or execute permissions to run scripts. Instructions for running scripts in each OS:
+Linux and Mac require you provide execute permissions to a file before it can be ran as a script. Instructions for running scripts in each OS:
+
 - [Linux](https://www.cyberciti.biz/faq/howto-run-a-script-in-linux/)
 - [Mac](https://support.apple.com/guide/terminal/make-a-file-executable-apdd100908f-06b3-4e63-8a87-32e71241bab4/mac)
 - [Windows](https://ss64.com/ps/syntax-run.html)
