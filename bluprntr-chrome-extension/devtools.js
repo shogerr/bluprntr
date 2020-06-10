@@ -1,3 +1,7 @@
+const port_number = chrome.storage.sync.get({ port_number: 8888 }, response => {
+  return response.port_number;
+});
+
 const ws = new WebSocket('ws://localhost:8888');
 
 function isOpen(socket) { return socket.readyState === socket.OPEN; }
@@ -5,6 +9,7 @@ function isOpen(socket) { return socket.readyState === socket.OPEN; }
 chrome.devtools.network.onRequestFinished.addListener(request => {
   if (request.request.url.includes('k.m3u8')) {
     chrome.tabs.query({active:true}, tabs => {
+      // Check for debug mode.
       chrome.storage.sync.get({ debug_mode: false }, response => {
         if (response.debug_mode)
           console.log(tabs);
