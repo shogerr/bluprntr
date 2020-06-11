@@ -126,6 +126,7 @@ wss.on('connection', function connection(ws) {
       log(green ('[downloading]'), '(video)', { filename: filename, url: title.url });
       collection[title.series] = collection[title.series] || {};
       collection[title.series][title.episode] = {url: title.url};
+      collection[title.series].resources = title.resources;
 
       if (!fs.existsSync(seriesPath)) {
         fs.mkdir(seriesPath, err => {

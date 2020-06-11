@@ -1,11 +1,13 @@
 BluPrntr
 ========
 
-A Chrome extension (and local server) to save your Bluprint classes while you watch!
+A Chrome extension (and local server) that saves your Bluprint classes to disk.
 Works on a Windows, Linux or Mac machine.
 
 Requirements
 ------------
+
+Install [FFmpeg](https://ffmpeg.org/)* and ensure `ffmpeg`, `ffplay` and `ffprobe` can be found from the system path.
 
 Ensure both **Node** and **npm** (or yarn) are installed and their installation location in your system path.
 
@@ -18,13 +20,17 @@ _-or-_
 Install `node` and `npm`/`yarn` using [Chocolatey](https://chocolatey.org/)**\***:
 
 ```powershell
+# Install FFmpeg
+choco install fmpeg
+
+# Install Node.js
 choco install nodejs
 
 # Optionally install yarn.
 choco install yarn
 ```
 
-**\*** `choco` is the preferred method.
+**\*** `choco` is the preferred installation method.
 
 ### Linux
 
