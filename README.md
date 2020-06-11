@@ -9,7 +9,7 @@ Requirements
 
 Install [FFmpeg](https://ffmpeg.org/)* and ensure `ffmpeg`, `ffplay` and `ffprobe` can be found from the system path.
 
-Ensure both **Node** and **npm** (or yarn) are installed and their installation location in your system path.
+Ensure both **Node** and **npm** (or yarn) are installed and that their installation location is in your system path.
 
 ### Windows
 
@@ -21,7 +21,7 @@ Install `node` and `npm`/`yarn` using [Chocolatey](https://chocolatey.org/)**\**
 
 ```powershell
 # Install FFmpeg
-choco install fmpeg
+choco install ffmpeg
 
 # Install Node.js
 choco install nodejs
@@ -39,7 +39,7 @@ Install `node` and `npm`/`yarn` using a package manager or comparable method.
 ### Mac
 
 For Mac, follow the instructions in the guide: [Installing Node.js® and NPM on Mac](https://treehouse.github.io/installation-guides/mac/node-mac.html),
-or use the Mac installer from Node.js [website](https://nodejs.org/en/).
+or use the Mac installer from [Node.js](https://nodejs.org/en/).
 
 Instructions
 ------------

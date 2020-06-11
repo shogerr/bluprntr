@@ -9,12 +9,26 @@ const { green, underline, dim, lightGray, darkGray, white } = require ('ansicolo
 const log = require('ololog').configure({
   locate: false,
   time: true,
-  stringify: { maxStringLength: 80 }
+  stringify: { maxStringLength: 80 },
+  tag: true
 });
 require('dotenv').config();
 
 bluprntrPort = process.env.BLUPRNTR_PORT ? process.env.BLUPRNTR_PORT : 8888;
-const wss = new WebSocket.Server({ port: bluprntrPort });
+
+var wss = new WebSocket.Server({ port: bluprntrPort });
+wss.on('connect', async (event) => {
+  log(event);
+});
+wss.on('open', async (event) => {
+  log(event);
+});
+wss.on('close', async (event) => {
+  log(event);
+});
+wss.on('error', async (event) => {
+  log.error (event);
+});
 
 let downloadPath = '.';
 if (process.env.BLUPRNTR_DOWNLOAD_PATH)
@@ -46,9 +60,9 @@ let settings = {
 };
 
 log(underline (`BluPrntr`));
-log(`Running on port ${bluprntrPort}.`);
-log(`Downloading to, "${downloadPath}".`);
-log.darkGray ({settings: settings});
+log.info (`Running on port ${bluprntrPort}.`);
+log.info (`Downloading to, "${downloadPath}".`);
+log.darkGray.info ({settings: settings});
 
 function downloadResources(resources, path) {
   if (resources.length > 0 && fs.existsSync(path)) {
@@ -82,7 +96,7 @@ function downloadResources(resources, path) {
               try {
                 fs.writeFileSync(filename, new Buffer.from(response.data, 'binary'), 'binary');
               } catch (err) {
-                console.error(err);
+                log.bright.red (err);
               }
             })
             .catch(err => {
@@ -131,12 +145,14 @@ wss.on('connection', function connection(ws) {
       if (!fs.existsSync(seriesPath)) {
         fs.mkdir(seriesPath, err => {
           if (err)
-            log.error(err);
+            log.red.error (err);
         });
       }
       youtubedl.exec(title.url, ['--output', filename + '.%(ext)s'], { cwd: seriesPath }, (err, output) => {
-        if (err) console.error(err);
-        log(green ('[finished]'), filename, '(' + output[output.length-1].replace(/\[download\] /, '').trim() + ')');
+        if (err)
+          log.red.error (err);
+        else
+          log(green ('[finished]'), filename, '(' + output[output.length-1].replace(/\[download\] /, '').trim() + ')');
       });
 
       titles.set(id, {
