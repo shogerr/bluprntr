@@ -4,8 +4,6 @@
 const axios = require('axios')
 const Entities = require('html-entities').XmlEntities
 const fs = require('fs')
-const os = require('os')
-const path = require('path')
 const WebSocket = require('ws')
 const youtubedl = require('youtube-dl')
 const entities = new Entities()
@@ -21,14 +19,15 @@ require('dotenv').config()
 var bluprntrPort = process.env.BLUPRNTR_PORT ? process.env.BLUPRNTR_PORT : 8888;
 
 var wss = new WebSocket.Server({ port: bluprntrPort })
+// TODO Straighten out why some events are handled, and some not.
 wss.on('connect', async (event) => {
-  log(event)
+  log (event)
 })
 wss.on('open', async (event) => {
-  log(event)
+  log (event)
 })
 wss.on('close', async (event) => {
-  log(event)
+  log (event)
 })
 wss.on('error', async (event) => {
   log.error (event)
@@ -44,14 +43,14 @@ else if (process.env.HOME)
 
 if (!fs.existsSync(downloadPath)) {
   fs.mkdirSync(downloadPath, { recursive: true }, err => {
-    if (err) console.error(err)
+    if (err) log.red.error (err)
   })
 }
 
 const dataPath = `${downloadPath}/data`
 if (!fs.existsSync(dataPath)) {
   fs.mkdirSync(dataPath, { recursive: true }, err => {
-    if (err) console.error(err)
+    if (err) log.red.error (err)
   })
 }
 const dataFile = `${dataPath}/data.json`
@@ -82,12 +81,12 @@ function downloadResources(resources, path, settings) {
     let resourcesPath = `${path}/resources`
     if (!fs.existsSync(resourcesPath)) {
       fs.mkdirSync(resourcesPath, { recursive: true }, err => {
-        if (err) console.error(err)
+        if (err) log.error (err)
       })
     }
 
     fs.readdir(resourcesPath, (err, items) => {
-      if (err) console.error(err);
+      if (err) log.red.error (err);
       if (items.length < resources.length) {
         resources.forEach(resource => {
           axios.get(resource.url, {
@@ -113,14 +112,14 @@ function downloadResources(resources, path, settings) {
               }
             })
             .catch(err => {
-              console.error(err);
+              log.red.error (err);
             });
         });
       }
     });
   }
 
-  return true;
+  return true
 }
 
 function formatTitleString(s) {
@@ -157,8 +156,7 @@ wss.on('connection', function connection(ws) {
 
       if (!fs.existsSync(seriesPath)) {
         fs.mkdir(seriesPath, err => {
-          if (err)
-            log.red.error (err)
+          if (err) log.red.error (err)
         })
       }
 
@@ -172,7 +170,7 @@ wss.on('connection', function connection(ws) {
           log.red.error (err)
         }
         else
-          log(green ('[finished]'), filename, '(' + output[output.length-1].replace(/\[download\] /, '').trim() + ')')
+          log (green ('[finished]'), filename, '(' + output[output.length-1].replace(/\[download\] /, '').trim() + ')')
       })
 
       titles.set(id, {
@@ -181,10 +179,10 @@ wss.on('connection', function connection(ws) {
       })
 
       fs.writeFileSync(dataFile, JSON.stringify([...titles], null, 2), 'utf-8', err => {
-        log.error (err)
+        if (err) log.error (err)
       })
       fs.writeFileSync(collectionFile, JSON.stringify(collection, null, 2), 'utf-8', err => {
-        log.error (err)
+        if (err) log.error (err)
       })
     }
   });
