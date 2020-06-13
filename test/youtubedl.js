@@ -1,7 +1,7 @@
 var ytdl = require('youtube-dl')
 var url = 'https://www.youtube.com/watch?v=fmIGnd98DX4'
 var path = require('path')
-var ffmpeg = {}.path = require('ffmpeg-static').replace('app.asar', 'app.asar.unpacked')
+var ffmpegPath = require('ffmpeg-static').replace('app.asar', 'app.asar.unpacked')
 ytdl.setYtdlBinary(
   ytdl.getYtdlBinary().replace("app.asar", "app.asar.unpacked")
 )
