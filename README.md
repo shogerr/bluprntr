@@ -35,6 +35,7 @@ Run `yarn global install` from the folder where the Bluprntr project was cloned/
 ```bash
 # Set the current directory to the bluprntr folder.
 cd ./bluprntr
+
 # Install bluprntr with npm,
 npm install --global
 
