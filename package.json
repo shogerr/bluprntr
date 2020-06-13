@@ -3,10 +3,15 @@
   "main": "src/server.js",
   "author": "Ross",
   "license": "MIT",
+  "bin": "src/server.js",
+  "pkg": {
+    "assets": "node_modules/youtube-dl/bin/details"
+  },
   "dependencies": {
     "ansicolor": "^1.1.93",
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
+    "ffmpeg-static": "^4.2.3",
     "html-entities": "^1.3.1",
     "ololog": "^1.1.156",
     "ws": "^7.3.0",

@@ -7,8 +7,6 @@ Works on a Windows, Linux or Mac machine.
 Requirements
 ------------
 
-Install [FFmpeg](https://ffmpeg.org/)* and ensure `ffmpeg`, `ffplay` and `ffprobe` can be found from the system path.
-
 Ensure both **Node** and **npm** (or yarn) are installed and that their installation location is in your system path.
 
 ### Windows
@@ -20,9 +18,6 @@ _-or-_
 Install `node` and `npm`/`yarn` using [Chocolatey](https://chocolatey.org/)**\***:
 
 ```powershell
-# Install FFmpeg
-choco install ffmpeg
-
 # Install Node.js
 choco install nodejs
 
@@ -73,7 +68,7 @@ npm install
 npm start
 ```
 
-Now as you browse Bluprint classes, the videos you watch will be downloaded to your home directory or what has been set with `BLUPRNTR_DOWNLOAD_PATH`.
+Now as you browse Bluprint classes, the videos you click on will be downloaded in the background to your home directory -- or what has been defined with the environment variable `BLUPRNTR_DOWNLOAD_PATH`.
 
 ### Set Download Path
 

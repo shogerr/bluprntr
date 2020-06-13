@@ -1,6 +1,7 @@
 const axios = require('axios');
 const Entities = require('html-entities').XmlEntities;
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const WebSocket = require('ws');
 const youtubedl = require('youtube-dl');
@@ -148,9 +149,17 @@ wss.on('connection', function connection(ws) {
             log.red.error (err);
         });
       }
-      youtubedl.exec(title.url, ['--output', filename + '.%(ext)s'], { cwd: seriesPath }, (err, output) => {
-        if (err)
-          log.red.error (err);
+
+      const ffmpegbin = os.platform() === 'win32' ? 'ffmpeg.exe' : 'ffmpeg';
+
+      youtubedlOptions = ['--output', filename + '.%(ext)s',
+                          '--ffmpeg-location', require('ffmpeg-static')
+                         ];
+      youtubedl.exec(title.url, youtubedlOptions, { cwd: seriesPath }, (err, output) => {
+        if (err) {
+          log.configure ({stringify: { maxStringLength: 256 }}).red (err);
+          log.red (err.message);
+        }
         else
           log(green ('[finished]'), filename, '(' + output[output.length-1].replace(/\[download\] /, '').trim() + ')');
       });
