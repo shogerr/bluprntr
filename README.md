@@ -2,7 +2,7 @@ BluPrntr
 ========
 
 A Chrome extension (and local server) that saves your Bluprint classes to disk.
-Works on a Windows, Linux or Mac machine.
+Works on a Windows, Mac, or Linux machine.
 
 Requirements
 ------------
@@ -24,7 +24,7 @@ This application uses [Yarn](https://yarnpkg.com/).
 Instructions
 ------------
 
-If you are not familiar with the command line, please see this [codedemy article](https://www.codecademy.com/articles/command-line-setup).
+If you are not familiar with the command line, please see this [Codedemy article](https://www.codecademy.com/articles/command-line-setup).
 
 ### 1. [Install the Chrome Extension](#loading-the-bluprntr-chrome-extension)
 
@@ -51,7 +51,7 @@ Start the application by running `bluprntr` from the command line.
 bluprntr
 ```
 
-### 4. Open the _Developer Tools_ and Start a video in Chrome
+### 4. Open the _Developer Tools_ and Start a Video in Chrome
 
 Visit the class website, **Start the Developer Tools**, and start a class video.
 A copy of the video will immediately be downloaded to your system's downloads folder.
@@ -71,7 +71,7 @@ The following steps will download a class video to disk.
 3. Install Bluprntr: `npm install <path-to-bluprntr-project> --global` from the terminal (powershell/shell/cli).
 4. Start the `bluprntr` application from the terminal.
 5. Navigate to a class using Chrome.
-6. Open Chrome's _Developer Tools_ and select the network tab.
+6. Open Chrome's _Developer Tools_.
 7. Start a class video.
 8. Watch for output in the terminal where `bluprntr` was started.
 
