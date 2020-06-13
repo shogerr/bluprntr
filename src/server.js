@@ -45,8 +45,15 @@ if (!fs.existsSync(downloadPath)) {
   });
 }
 
-const dataFile = `${path.resolve(__dirname)}/../data/data.json`;
-const collectionFile = `${path.resolve(__dirname)}/../data/collection.json`;
+const dataPath = `${downloadPath}/data`;
+if (!fs.existsSync(dataPath)) {
+  fs.mkdir(dataPath, { recursive: true }, err => {
+    if (err) console.error(err);
+  });
+}
+const dataFile = `${dataPath}/data.json`;
+const collectionFile = `${dataPath}/collection.json`;
+
 let titles = fs.existsSync(dataFile) ? new Map(JSON.parse(fs.readFileSync(dataFile, 'utf8'))) : new Map();
 let collection = fs.existsSync(collectionFile) ? JSON.parse(fs.readFileSync(collectionFile, 'utf8')) : {};
 
@@ -60,7 +67,7 @@ let settings = {
   ])
 };
 
-log(underline (`BluPrntr`));
+log (underline (`BluPrntr`));
 log.info (`Running on port ${bluprntrPort}.`);
 log.info (`Downloading to, "${downloadPath}".`);
 log.darkGray.info ({settings: settings});
@@ -149,8 +156,6 @@ wss.on('connection', function connection(ws) {
             log.red.error (err);
         });
       }
-
-      const ffmpegbin = os.platform() === 'win32' ? 'ffmpeg.exe' : 'ffmpeg';
 
       youtubedlOptions = ['--output', filename + '.%(ext)s',
                           '--ffmpeg-location', require('ffmpeg-static')

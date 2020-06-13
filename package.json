@@ -2,11 +2,9 @@
   "name": "bluprntr",
   "main": "src/server.js",
   "author": "Ross",
+  "version": "0.0.1",
   "license": "MIT",
   "bin": "src/server.js",
-  "pkg": {
-    "assets": "node_modules/youtube-dl/bin/details"
-  },
   "dependencies": {
     "ansicolor": "^1.1.93",
     "axios": "^0.19.2",
