@@ -1,58 +1,60 @@
-const axios = require('axios');
-const Entities = require('html-entities').XmlEntities;
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
-const WebSocket = require('ws');
-const youtubedl = require('youtube-dl');
-const entities = new Entities();
-const { green, underline, dim, lightGray, darkGray, white } = require ('ansicolor');
+'use strict'
+
+const axios = require('axios')
+const Entities = require('html-entities').XmlEntities
+const fs = require('fs')
+const os = require('os')
+const path = require('path')
+const WebSocket = require('ws')
+const youtubedl = require('youtube-dl')
+const entities = new Entities()
+const {underline, green} = require('ansicolor')
 const log = require('ololog').configure({
   locate: false,
   time: true,
   stringify: { maxStringLength: 80 },
   tag: true
-});
-require('dotenv').config();
+})
 
-bluprntrPort = process.env.BLUPRNTR_PORT ? process.env.BLUPRNTR_PORT : 8888;
+require('dotenv').config()
+var bluprntrPort = process.env.BLUPRNTR_PORT ? process.env.BLUPRNTR_PORT : 8888;
 
-var wss = new WebSocket.Server({ port: bluprntrPort });
+var wss = new WebSocket.Server({ port: bluprntrPort })
 wss.on('connect', async (event) => {
-  log(event);
-});
+  log(event)
+})
 wss.on('open', async (event) => {
-  log(event);
-});
+  log(event)
+})
 wss.on('close', async (event) => {
-  log(event);
-});
+  log(event)
+})
 wss.on('error', async (event) => {
-  log.error (event);
-});
+  log.error (event)
+})
 
-let downloadPath = '.';
+let downloadPath = '.'
 if (process.env.BLUPRNTR_DOWNLOAD_PATH)
-  downloadPath = process.env.BLUPRNTR_DOWNLOAD_PATH;
+  downloadPath = process.env.BLUPRNTR_DOWNLOAD_PATH
 else if (process.env.HomeDrive)
-  downloadPath = `${process.env.HomeDrive}${process.env.HomePath}/Downloads/Bluprint`;
+  downloadPath = `${process.env.HomeDrive}${process.env.HomePath}/Downloads/Bluprint`
 else if (process.env.HOME)
-  downloadPath = `${process.env.HOME}/Downloads/Bluprint`;
+  downloadPath = `${process.env.HOME}/Downloads/Bluprint`
 
 if (!fs.existsSync(downloadPath)) {
-  fs.mkdir(downloadPath, { recursive: true }, err => {
-    if (err) console.error(err);
-  });
+  fs.mkdirSync(downloadPath, { recursive: true }, err => {
+    if (err) console.error(err)
+  })
 }
 
-const dataPath = `${downloadPath}/data`;
+const dataPath = `${downloadPath}/data`
 if (!fs.existsSync(dataPath)) {
-  fs.mkdir(dataPath, { recursive: true }, err => {
-    if (err) console.error(err);
-  });
+  fs.mkdirSync(dataPath, { recursive: true }, err => {
+    if (err) console.error(err)
+  })
 }
-const dataFile = `${dataPath}/data.json`;
-const collectionFile = `${dataPath}/collection.json`;
+const dataFile = `${dataPath}/data.json`
+const collectionFile = `${dataPath}/collection.json`
 
 let titles = fs.existsSync(dataFile) ? new Map(JSON.parse(fs.readFileSync(dataFile, 'utf8'))) : new Map();
 let collection = fs.existsSync(collectionFile) ? JSON.parse(fs.readFileSync(collectionFile, 'utf8')) : {};
@@ -67,18 +69,20 @@ let settings = {
   ])
 };
 
-log (underline (`BluPrntr`));
-log.info (`Running on port ${bluprntrPort}.`);
-log.info (`Downloading to, "${downloadPath}".`);
-log.darkGray.info ({settings: settings});
+log (underline (`BluPrntr`))
+log.yellow.warn (`All data files are now stored under '${dataPath}'.`)
+log.yellow.bright.warn (`Please move any existing files under ./data (data.json & collection.json) to '${dataPath}'!`)
+log.info (`Running on port ${bluprntrPort}.`)
+log.info (`Downloading to, "${downloadPath}".`)
+log.darkGray.info ({settings: settings})
 
-function downloadResources(resources, path) {
+function downloadResources(resources, path, settings) {
   if (resources.length > 0 && fs.existsSync(path)) {
-    let resourcesPath = `${path}/resources`;
+    let resourcesPath = `${path}/resources`
     if (!fs.existsSync(resourcesPath)) {
       fs.mkdirSync(resourcesPath, { recursive: true }, err => {
-        if (err) console.error(err);
-      });
+        if (err) console.error(err)
+      })
     }
 
     fs.readdir(resourcesPath, (err, items) => {
@@ -95,16 +99,16 @@ function downloadResources(resources, path) {
               }
             })
             .then((response) => {
-              resource.title = entities.decode(resource.title);
-              let filetype = response.headers['content-type'].match(/\/(.*)$/)[1];
-              resource.title = resource.title.replace(/: |:/g, '꞉ ');
-              let filename = `${path}/resources/${resource.title}.${filetype}`;
-              filename = filename.replace(/"/g, '');
-              log(green ('[downloaded]'), '(resource)', filename);
+              resource.title = entities.decode(resource.title)
+              let filetype = response.headers['content-type'].match(/\/(.*)$/)[1]
+              resource.title = resource.title.replace(/: |:/g, settings.character_map.get(':'))
+              let filename = `${path}/resources/${resource.title}.${filetype}`
+              filename = filename.replace(/"/g, '')
+              log(green ('[downloaded]'), '(resource)', filename)
               try {
-                fs.writeFileSync(filename, new Buffer.from(response.data, 'binary'), 'binary');
+                fs.writeFileSync(filename, new Buffer.from(response.data, 'binary'), 'binary')
               } catch (err) {
-                log.bright.red (err);
+                log.bright.red (err)
               }
             })
             .catch(err => {
@@ -126,56 +130,61 @@ function formatTitleString(s) {
 
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(message) {
-    let title = JSON.parse(message);
-    log.maxDepth(3).darkGray ('[caught]', title);
-    title.episode = entities.decode(title.episode);
-    title.series = entities.decode(title.series);
-    let id = title.series + "#" + title.episode;
-    title.episode = formatTitleString(title.episode);
-    title.series = formatTitleString(title.series);
-    let filename = `${title.series} - ${title.track.toString().padStart(2, '0')} - ${title.episode}`;
+    let title = JSON.parse(message)
+    log.maxDepth(3).darkGray ('[caught]', title)
+    title.episode = entities.decode(title.episode)
+    title.series = entities.decode(title.series)
+    let id = title.series + "#" + title.episode
+    title.episode = formatTitleString(title.episode)
+    title.series = formatTitleString(title.series)
+    let filename = `${title.series} - ${title.track.toString().padStart(2, '0')} - ${title.episode}`
     if (settings.replace_spaces)
-      filename = filename.replace(/ /g, settings.character_map.get('.'));
-    const seriesPath = `${downloadPath}/${title.series}`;
+      filename = filename.replace(/ /g, settings.character_map.get('.'))
+    const seriesPath = `${downloadPath}/${title.series}`
 
     if (titles.has(id) && !titles.get(id).resources_downloaded) {
       titles.set(id, {
         url: title.url,
-        resources_downloaded: downloadResources(title.resources, seriesPath)
-      });
-      fs.writeFileSync(dataFile, JSON.stringify([...titles], null, 2), 'utf-8');
+        resources_downloaded: downloadResources(title.resources, seriesPath, settings)
+      })
+      fs.writeFileSync(dataFile, JSON.stringify([...titles], null, 2), 'utf-8')
     } else if (!titles.has(id)) {
-      log(green ('[downloading]'), '(video)', { filename: filename, url: title.url });
-      collection[title.series] = collection[title.series] || {};
-      collection[title.series][title.episode] = {url: title.url};
-      collection[title.series].resources = title.resources;
+      log(green ('[downloading]'), '(video)', { filename: filename, url: title.url })
+      collection[title.series] = collection[title.series] || {}
+      collection[title.series][title.episode] = {url: title.url}
+      collection[title.series].resources = title.resources
 
       if (!fs.existsSync(seriesPath)) {
         fs.mkdir(seriesPath, err => {
           if (err)
-            log.red.error (err);
-        });
+            log.red.error (err)
+        })
       }
 
-      youtubedlOptions = ['--output', filename + '.%(ext)s',
-                          '--ffmpeg-location', require('ffmpeg-static')
-                         ];
-      youtubedl.exec(title.url, youtubedlOptions, { cwd: seriesPath }, (err, output) => {
+      var ffmpeg = { path: require('ffmpeg-static') }
+      youtubedl.exec(title.url,
+        ['--output', filename + '.%(ext)s', '--ffmpeg-location', ffmpeg.path],
+        { cwd: seriesPath },
+        (err, output) => {
         if (err) {
-          log.configure ({stringify: { maxStringLength: 256 }}).red (err);
-          log.red (err.message);
+          log.red (err.message)
+          log.red.error (err)
         }
         else
-          log(green ('[finished]'), filename, '(' + output[output.length-1].replace(/\[download\] /, '').trim() + ')');
-      });
+          log(green ('[finished]'), filename, '(' + output[output.length-1].replace(/\[download\] /, '').trim() + ')')
+      })
 
       titles.set(id, {
         url: title.url,
-        resources_downloaded: downloadResources(title.resources, seriesPath)
-      });
+        resources_downloaded: downloadResources(title.resources, seriesPath, settings)
+      })
 
-      fs.writeFileSync(dataFile, JSON.stringify([...titles], null, 2), 'utf-8');
-      fs.writeFileSync(collectionFile, JSON.stringify(collection, null, 2), 'utf-8');
+      fs.writeFileSync(dataFile, JSON.stringify([...titles], null, 2), 'utf-8', err => {
+        log.error (err)
+      })
+      fs.writeFileSync(collectionFile, JSON.stringify(collection, null, 2), 'utf-8', err => {
+        log.error (err)
+      })
     }
   });
 });

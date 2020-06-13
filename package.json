@@ -1,10 +1,19 @@
 {
   "name": "bluprntr",
-  "main": "src/server.js",
-  "author": "Ross",
+  "author": "shogerr",
   "version": "0.0.1",
   "license": "MIT",
-  "bin": "src/server.js",
+  "main": "src/main.js",
+  "bin": "test/test_youtubedl.js",
+  "pkg": {
+    "assets": "node_modules/youtube-dl/bin/*"
+  },
+  "build": {
+    "asarUnpack": [
+      "node_modules/ffmpeg-static/*",
+      "node_modules/youtube-dl/bin/*"
+    ]
+  },
   "dependencies": {
     "ansicolor": "^1.1.93",
     "axios": "^0.19.2",
@@ -17,6 +26,14 @@
   },
   "scripts": {
     "start": "node src/server.js",
-    "test-server": "node src/server.js"
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "postinstall": "electron-builder install-app-deps",
+    "ui": "electron .",
+    "test-server": "node test/server.js"
+  },
+  "devDependencies": {
+    "electron": "^9.0.4",
+    "electron-builder": "^22.7.0"
   }
 }
