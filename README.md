@@ -9,7 +9,7 @@ Requirements
 
 The only requirement is [Node.js](https://nodejs.org/en/).
 
-Follow [Node.js' installation instructions](https://nodejs.org/en/) your OS:
+Follow [Node.js' installation instructions](https://nodejs.org/en/) for your OS:
 
 - [Windows](https://nodejs.org/en/download/package-manager/#windows)*
 - [Mac](https://nodejs.org/en/download/package-manager/#macos)
@@ -68,8 +68,8 @@ The following steps will download a class video to disk.
 
 1. Clone/download the project from Github.
 2. Install the Chrome Extension (instructions in next section).
-3. Install Bluprntr: `npm install <path-to-bluprntr-project> --global`
-4. Start the `bluprntr` application from a terminal (powershell/shell/cli).
+3. Install Bluprntr: `npm install <path-to-bluprntr-project> --global` from the terminal (powershell/shell/cli).
+4. Start the `bluprntr` application from the terminal.
 5. Navigate to a class using Chrome.
 6. Open Chrome's _Developer Tools_ and select the network tab.
 7. Start a class video.
