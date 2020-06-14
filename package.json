@@ -1,9 +1,9 @@
 {
   "name": "bluprntr",
   "author": "shogerr",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
-  "main": "src/server.js",
+  "main": "src/index.js",
   "bin": { "bluprntr": "./src/server.js" },
   "dependencies": {
     "ansicolor": "^1.1.93",

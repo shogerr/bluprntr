@@ -3,12 +3,23 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+[0.0.3] - 2020-06-14
+--------------------
+
+### Added
+
+- Extension displays notifications in server and client when a connection is established.
+
+### Changed
+
+- The package is now a module.
+
 [0.0.2] - 2020-06-14
 --------------------
 
 ### Added
 
-- `bluprntr` bin add in package.json. Package can be installed globally.
+- the `bluprntr` bin declared in package.json. Package can be installed globally.
 
 [0.0.1] - 2020-06-13
 --------------------
