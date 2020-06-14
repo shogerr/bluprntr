@@ -1,9 +1,5 @@
 node_modules/
-
-*.mp4
 *.log
 *.env
 
-dist/
-
-dmp/
+*.mp4

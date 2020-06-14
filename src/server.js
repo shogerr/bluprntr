@@ -71,7 +71,7 @@ let settings = {
 
 log (underline (`BluPrntr`))
 log.yellow.warn (`All data files are now stored under '${dataPath}'.`)
-log.yellow.bright.warn (`Please move any existing files under ./data (data.json & collection.json) to '${dataPath}'!`)
+log.yellow.bright.warn (`Please move any existing files from the local folder ./data/(data.json & collection.json) to '${dataPath}'.`)
 log.info (`Running on port ${bluprntrPort}.`)
 log.info (`Downloading to, "${downloadPath}".`)
 log.darkGray.info ({settings: settings})
