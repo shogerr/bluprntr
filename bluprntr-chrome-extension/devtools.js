@@ -1,8 +1,28 @@
-const port_number = chrome.storage.sync.get({ port_number: 8888 }, response => {
-  return response.port_number;
+let port_number = 8888
+
+chrome.storage.sync.get({ port_number: 8888 }, response => {
+  port_number = response.port_number
 });
 
-const ws = new WebSocket('ws://localhost:8888');
+const ws = new WebSocket(`ws://localhost:${port_number}`)
+
+ws.onopen = _ => {
+  console.log(`Connected to the bluprntr server!`)
+  chrome.notifications.create(
+    'id1',
+    {
+      type: 'basic',
+      title: 'BluPrntr Connected',
+      message:'Happy BluPrinting!',
+      iconUrl: chrome.extension.getURL("images/icon128.png"),
+      priority:1
+    },
+    id => {
+      console.log(id)
+      console.log(chrome.runtime.lastError);
+    }
+  )
+}
 
 function isOpen(socket) { return socket.readyState === socket.OPEN; }
 
@@ -12,7 +32,7 @@ chrome.devtools.network.onRequestFinished.addListener(request => {
       // Check for debug mode.
       chrome.storage.sync.get({ debug_mode: false }, response => {
         if (response.debug_mode)
-          console.log(tabs);
+          console.log(tabs)
       });
 
       if (tabs.length > 0) {
@@ -31,7 +51,7 @@ chrome.devtools.network.onRequestFinished.addListener(request => {
           }));
         });
       } else {
-        console.log("Couldn't find any Bluprint tabs. Try unmuting and selecting the tab.");
+        console.log("Couldn't find any Bluprint tabs. A Bluprint video must be playing in an active tab.")
       }
     });
   }

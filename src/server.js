@@ -7,7 +7,7 @@ const fs = require('fs')
 const WebSocket = require('ws')
 const youtubedl = require('youtube-dl')
 const entities = new Entities()
-const {underline, green} = require('ansicolor')
+const {underline, blue, green} = require('ansicolor')
 const log = require('ololog').configure({
   locate: false,
   time: true,
@@ -20,15 +20,15 @@ var bluprntrPort = process.env.BLUPRNTR_PORT ? process.env.BLUPRNTR_PORT : 8888;
 
 var wss = new WebSocket.Server({ port: bluprntrPort })
 // TODO Straighten out why some events are handled, and some not.
-wss.on('connect', async (event) => {
-  log (event)
-})
 wss.on('open', async (event) => {
   log (event)
 })
 wss.on('close', async (event) => {
   log (event)
 })
+wss.onclose = () => {
+  log (`Chrome connection closed.`)
+}
 wss.on('error', async (event) => {
   log.error (event)
 })
@@ -129,6 +129,8 @@ function formatTitleString(s) {
 }
 
 wss.on('connection', function connection(ws) {
+  log.info ('The', blue ('Bluprint'), 'Chrome extension has connected!')
+  ws.send('Connected to bluprntr server')
   ws.on('message', function incoming(message) {
     let title = JSON.parse(message)
     log.maxDepth(3).darkGray ('[caught]', title)
