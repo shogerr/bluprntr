@@ -14,6 +14,10 @@ const log = require('ololog').configure({
   tag: true
 })
 
+youtubedl.setYtdlBinary(
+  youtubedl.getYtdlBinary().replace("app.asar", "app.asar.unpacked")
+)
+
 require('dotenv').config()
 var bluprntrPort = process.env.BLUPRNTR_PORT ? process.env.BLUPRNTR_PORT : 8888;
 
@@ -35,10 +39,8 @@ wss.on('error', async (event) => {
 let downloadPath = '.'
 if (process.env.BLUPRNTR_DOWNLOAD_PATH)
   downloadPath = process.env.BLUPRNTR_DOWNLOAD_PATH
-else if (process.env.HomeDrive)
-  downloadPath = `${process.env.HomeDrive}${process.env.HomePath}/Downloads/Bluprint`
-else if (process.env.HOME)
-  downloadPath = `${process.env.HOME}/Downloads/Bluprint`
+else
+  downloadPath = `${require('os').homedir()}/Downloads/Bluprint`
 
 if (!fs.existsSync(downloadPath)) {
   fs.mkdirSync(downloadPath, { recursive: true }, err => {
@@ -189,4 +191,4 @@ wss.on('connection', function connection(ws) {
   });
 });
 
-module.exports = {}
+module.exports = { downloadPath }
