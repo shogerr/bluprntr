@@ -65,7 +65,6 @@ log.info (`Running on port ${bluprntrPort}.`)
 log.info (`Downloading to, "${downloadPath}".`)
 log.darkGray.info ({settings: settings})
 
-
 function performSetup(settings) {
   const LoadOrCreateData = (filepath) => {
     if (fs.existsSync(filepath)) {
@@ -160,7 +159,6 @@ function formatTitleString(s) {
 }
 
 const data = performSetup(settings)
-log (data)
 const titles = data.titles
 const collection = data.collection
 
