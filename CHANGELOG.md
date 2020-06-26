@@ -3,6 +3,14 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+[0.0.4] - 2020-06-25
+--------------------
+
+### Added
+
+- Files and folders used by the server are now checked and created where needed.
+- Verbose output for disk activity (folders & files).
+
 [0.0.3] - 2020-06-14
 --------------------
 
