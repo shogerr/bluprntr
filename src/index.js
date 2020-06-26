@@ -42,27 +42,14 @@ if (process.env.BLUPRNTR_DOWNLOAD_PATH)
 else
   downloadPath = `${require('os').homedir()}/Downloads/Bluprint`
 
-if (!fs.existsSync(downloadPath)) {
-  fs.mkdirSync(downloadPath, { recursive: true }, err => {
-    if (err) log.red.error (err)
-  })
-}
-
-const dataPath = `${downloadPath}/data`
-if (!fs.existsSync(dataPath)) {
-  fs.mkdirSync(dataPath, { recursive: true }, err => {
-    if (err) log.red.error (err)
-  })
-}
-const dataFile = `${dataPath}/data.json`
-const collectionFile = `${dataPath}/collection.json`
-
-let titles = fs.existsSync(dataFile) ? new Map(JSON.parse(fs.readFileSync(dataFile, 'utf8'))) : new Map();
-let collection = fs.existsSync(collectionFile) ? JSON.parse(fs.readFileSync(collectionFile, 'utf8')) : {};
 
 let settings = {
-  data_file: dataFile,
-  collection_file: collectionFile,
+  download_path: downloadPath,
+  get data_path() { return `${this.download_path}/data` },
+  get data_file() { return `${this.data_path}/data.json` },
+  get collection_file() { return `${this.data_path}/collection.json` },
+  save_data_file: true,
+  save_collection_file: false,
   replace_spaces: false,
   character_map: new Map([
     [':', "\uA789"],
@@ -70,19 +57,62 @@ let settings = {
   ])
 };
 
+// Print the header message.
 log (underline (`BluPrntr`))
-log.yellow.warn (`All data files are now stored under '${dataPath}'.`)
-log.yellow.bright.warn (`Please move any existing files from the local folder ./data/(data.json & collection.json) to '${dataPath}'.`)
+log.yellow.warn (`All data files are now stored under '${settings.data_path}'.`)
+log.yellow.bright.warn (`Please move any existing files (./data/data.json & ./data/collection.json) to '${settings.data_path}'.`)
 log.info (`Running on port ${bluprntrPort}.`)
 log.info (`Downloading to, "${downloadPath}".`)
 log.darkGray.info ({settings: settings})
+
+
+function performSetup(settings) {
+  const LoadOrCreateData = (filepath) => {
+    if (fs.existsSync(filepath)) {
+      try {
+        let contents = JSON.parse(fs.readFileSync(filepath, 'utf8'));
+        return contents;
+      } catch (e) {
+        log.red (`There was a problem loading ${filepath}. Please check the integrity of its contents.`);
+        log.warn (`Disabling saving`);
+        log.error (e);
+        return undefined;
+      }
+    } else {
+      return undefined;
+    }
+  };
+  const loadFileData = (filepath, data) => {
+    let loaded = LoadOrCreateData(filepath);
+    if (loaded === undefined) return [false, data];
+    return [true, loaded];
+  };
+  const findFolderOrCreate = folderPath => {
+    if (!fs.existsSync(folderPath)) {
+      log.warn (`The path "${folderPath}" was not found.`);
+      log.bright.warn (`Bluprntr has created the folder "${folderPath}".`);
+      fs.mkdirSync(folderPath, { recursive: true }, err => {
+        if (err) log.red.error (err);
+      })
+    }
+  };
+
+  findFolderOrCreate(settings.download_path);
+  findFolderOrCreate(settings.data_path);
+  let titles_ = loadFileData(settings.data_file, new Map());
+  let collection_ = loadFileData(settings.collection_file, {});
+  if (!titles_[0]) settings.save_data_file = false;
+  if (!collection_[0]) settings.save_collection_file = false;
+
+  return {titles: titles_[1], collection: collection_[1]}
+}
 
 function downloadResources(resources, path, settings) {
   if (resources.length > 0 && fs.existsSync(path)) {
     let resourcesPath = `${path}/resources`
     if (!fs.existsSync(resourcesPath)) {
       fs.mkdirSync(resourcesPath, { recursive: true }, err => {
-        if (err) log.error (err)
+        if (err) log.error (err);
       })
     }
 
@@ -107,9 +137,9 @@ function downloadResources(resources, path, settings) {
               filename = filename.replace(/"/g, '')
               log(green ('[downloaded]'), '(resource)', filename)
               try {
-                fs.writeFileSync(filename, new Buffer.from(response.data, 'binary'), 'binary')
+                fs.writeFileSync(filename, new Buffer.from(response.data, 'binary'), 'binary');
               } catch (err) {
-                log.bright.red (err)
+                log.bright.red (err);
               }
             })
             .catch(err => {
@@ -126,8 +156,13 @@ function downloadResources(resources, path, settings) {
 function formatTitleString(s) {
   s = s.replace(/: |:/g, `${settings.character_map.get(':')} `)
        .replace(/\/|\\/g, '-')
-  return s
+  return s;
 }
+
+const data = performSetup(settings)
+log (data)
+const titles = data.titles
+const collection = data.collection
 
 wss.on('connection', function connection(ws) {
   log.info ('The', blue ('Bluprint'), 'Chrome extension has connected!')
@@ -181,10 +216,10 @@ wss.on('connection', function connection(ws) {
         resources_downloaded: downloadResources(title.resources, seriesPath, settings)
       })
 
-      fs.writeFileSync(dataFile, JSON.stringify([...titles], null, 2), 'utf-8', err => {
+      fs.writeFileSync(settings.data_file, JSON.stringify([...titles], null, 2), 'utf-8', err => {
         if (err) log.error (err)
       })
-      fs.writeFileSync(collectionFile, JSON.stringify(collection, null, 2), 'utf-8', err => {
+      fs.writeFileSync(settings.collection_file, JSON.stringify(collection, null, 2), 'utf-8', err => {
         if (err) log.error (err)
       })
     }
