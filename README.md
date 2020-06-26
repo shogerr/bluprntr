@@ -30,8 +30,6 @@ If you are not familiar with the command line, please see this [Codedemy article
 
 ### 2. Install Bluprntr
 
-Run `yarn global install` from the folder where the Bluprntr project was cloned/extracted.
-
 ```bash
 # Set the current directory to the bluprntr folder.
 cd ./bluprntr
