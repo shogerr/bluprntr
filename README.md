@@ -1,12 +1,8 @@
-
-
-<img src="./bluprntr-chrome-extension/images/icon48.png">LUPRNTR
+BluPrntr
 ========
 
 A Chrome extension (and local server) that saves your Bluprint classes to disk.
 Works on a Windows, Mac, or Linux machine.
-
-<img src="https://img.shields.io/liberapay/receives/ekem.svg?logo=liberapay">
 
 Requirements
 ------------

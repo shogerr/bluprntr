@@ -2,36 +2,48 @@
 <html>
     <head>
         <title>BluPrntr Panel</title>
+        <style>
+            label {
+                display: inline-block;
+                width: 6em;
+                text-align: left;
+            }
+            .settings-group {
+                border: .5px gray solid;
+                padding: 8px;
+                border-radius: 2px;
+                margin: 0px 0px 5px 0px;
+            }
+            .settings-item {
+                margin: 6px 0px 6px 0px;
+            }
+        </style>
     </head>
     <body>
-        <div>
-            <h1>BluPrntr Options</h1>
-        </div>
-        <div>
-            <label>
-                Hostname
-                <input type="text" id="hostname" value="localhost">
-            </label>
-        </div>
-        <div>
-            <label>
-                Port Number
+        <h1>BluPrntr Options</h1>
+        <label>Connection</label>
+        <div class="settings-group" style="padding: 2px 8px 2px 8px">
+            <div class="settings-item">
+                <label>Port Number</label>
                 <input type="number" id="port-number" min="0" max="65535" style="width: 5em" value="8888">
-            </label>
+            </div>
+            <div class="settings-item">
+                <label>Hostname</label>
+                <input type="text" id="hostname" value="localhost">
+            </div>
         </div>
-        <div>
-            <label>
-                Filter
-                <select>
-                    <option>Bluprint</option>
-                </select>
-            </label>
+        <label>Filter</label>
+        <div class="settings-group">
+            <select id="filter-list">
+                <option value="k.m3u8">Bluprint</option>
+            </select>
+            <span>
+                <input type="text" id="filter-text">
+            </span>
         </div>
-        <div>
-            <label>
-                Debug Mode
-                <input type="checkbox" id="debug-mode" value="Debug">
-            </label>
+        <div style="text-align: right;">
+            <input type="checkbox" id="debug-mode" value="Debug">
+            <label style="display: inline;">Enable Debugging</label>
         </div>
         <div style="padding-top: 15px;">
             <button id="save-options">Save</button>

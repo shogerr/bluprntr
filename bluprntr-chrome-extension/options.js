@@ -1,4 +1,4 @@
-// Saves options to chrome.storage
+// Saves options to chrome.storage.
 function save_options() {
   var hostname = document.getElementById('hostname').value;
   var portNumber = document.getElementById('port-number').value;
@@ -17,10 +17,8 @@ function save_options() {
   });
 }
 
-// Restores select box and checkbox state using the preferences
-// stored in chrome.storage.
+// Restores select box and checkbox state using the preferences stored in chrome.storage.
 function restore_options() {
-  // Use default value color = 'red' and likesColor = true.
   chrome.storage.sync.get({
     hostname: 'localhost',
     port_number: 8888,
@@ -32,5 +30,10 @@ function restore_options() {
   });
 }
 
+// Update filter-text from user selection.
+let filterList = document.getElementById('filter-list')
+document.getElementById('filter-text').value = filterList.options[filterList.selectedIndex].value;
+
+// Add listeners
 document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('save-options').addEventListener('click', save_options);
