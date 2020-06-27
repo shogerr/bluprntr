@@ -183,7 +183,7 @@ wss.on('connection', function connection(ws) {
         url: title.url,
         resources_downloaded: downloadResources(title.resources, seriesPath, settings)
       })
-      fs.writeFileSync(dataFile, JSON.stringify([...titles], null, 2), 'utf-8')
+      fs.writeFileSync(settings.data_file, JSON.stringify([...titles], null, 2), 'utf-8')
     } else if (!titles.has(id)) {
       log(green ('[downloading]'), '(video)', { filename: filename, url: title.url })
       collection[title.series] = collection[title.series] || {}
