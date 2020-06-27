@@ -1,6 +1,6 @@
-<img src="./bluprntr-chrome-extension/images/icon48.png">
 
-BLUPRNTR
+
+<img src="./bluprntr-chrome-extension/images/icon48.png">LUPRNTR
 ========
 
 A Chrome extension (and local server) that saves your Bluprint classes to disk.
