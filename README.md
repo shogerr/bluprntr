@@ -1,4 +1,5 @@
 <img src="./bluprntr-chrome-extension/images/icon48.png">
+
 BLUPRNTR
 ========
 
