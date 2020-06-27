@@ -1,4 +1,4 @@
-BluPrntr
+Bluprntr
 ========
 
 A Chrome extension (and local server) that saves your Bluprint classes to disk.
