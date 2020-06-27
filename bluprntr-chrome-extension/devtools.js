@@ -42,7 +42,7 @@ ws.onclose = event => {
   if (!event.wasClean)
     console.warn(settings.log_prefix, 'Start or restart the server, and re-open the Developer Tools.');
 };
-ws.onevent = event => {
+ws.onerror = event => {
   if (ws.readyState == 1)
     console.info(settings.log_prefix, 'WebSocket Error:', event);
   else
