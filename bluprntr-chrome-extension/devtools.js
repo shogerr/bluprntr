@@ -1,60 +1,78 @@
-let port_number = 8888
+let settings = {
+  port_number: 8888,
+  hostname: 'localhost',
+  log_prefix: '[bluprntr]'
+};
 
-chrome.storage.sync.get({ port_number: 8888 }, response => {
-  port_number = response.port_number
-});
+chrome.storage.sync.get(
+  {
+   hostname: settings.hostname,
+   port_number: settings.port_number
+  },
+  response => {
+    settings.hostname = response.hostname
+    settings.port_number = response.port_number
+  }
+);
 
-const ws = new WebSocket(`ws://localhost:${port_number}`)
+const ws = new WebSocket(`ws://${settings.hostname}:${settings.port_number}`);
 
-ws.onopen = _ => {
-  console.log(`Connected to the bluprntr server!`)
+ws.onopen = event => {
+  console.info(settings.log_prefix, `Connected to server!`)
+  // Notify the user of the connection with a notification.
   chrome.notifications.create(
-    'id1',
+    'bprnt1',
     {
       type: 'basic',
-      title: 'BluPrntr Connected',
+      title: 'BluPrntr is Connected',
       message:'Happy BluPrinting!',
       iconUrl: chrome.extension.getURL("images/icon128.png"),
-      priority:1
+      priority: 1
     },
     id => {
-      console.log(id)
-      console.log(chrome.runtime.lastError);
+      if (chrome.runtime.lastError !== undefined)
+        console.error(chrome.runtime.lastError);
     }
-  )
-}
+  );
+};
+ws.onclose = event => {
+  console.info(settings.log_prefix, event)
+  console.log(settings.log_prefix, 'Connection closed.')
+};
+ws.onerror = error => {
+  console.error(settings.log_prefix, 'WebSocket error:', error);
+};
 
-function isOpen(socket) { return socket.readyState === socket.OPEN; }
-
+// Active tab listener filtering on url substrings.
 chrome.devtools.network.onRequestFinished.addListener(request => {
   if (request.request.url.includes('k.m3u8')) {
     chrome.tabs.query({active:true}, tabs => {
       // Check for debug mode.
       chrome.storage.sync.get({ debug_mode: false }, response => {
         if (response.debug_mode)
-          console.log(tabs)
+          console.debug(tabs);
       });
 
       if (tabs.length > 0) {
         chrome.tabs.sendMessage(tabs[0].id, { action: "bluprint" }, response => {
-          if (!isOpen(ws)) {
-            console.log("[bluprnt] Couldn't connect to server.");
+          if (ws.readyState !== ws.OPEN) {
+            console.info(settings.log_prefix, "Couldn't connect to the server.");
             return;
           }
-
           let data = {
             series: response.data.series,
-            episode: response.data.episode.replace(/: $ |:$/,''),
+            episode: response.data.episode,
             track: response.data.track,
             url: request.request.url,
             resources: response.data.resources
           };
+          // Send data
           ws.send(JSON.stringify({
             data: data
           }));
         });
       } else {
-        console.log("Couldn't find any Bluprint tabs. A Bluprint video must be playing in an active tab.")
+        console.warn(settings.log_prefix, "Couldn't find any Bluprint tabs. A Bluprint video must be playing in an active tab.")
       }
     });
   }

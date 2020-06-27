@@ -1,15 +1,17 @@
 // Saves options to chrome.storage
 function save_options() {
+  var hostname = document.getElementById('hostname').value;
   var portNumber = document.getElementById('port-number').value;
   var debugMode = document.getElementById('debug-mode').checked;
   chrome.storage.sync.set({
+    hostname: hostname,
     port_number: portNumber,
     debug_mode: debugMode
-  }, _ => {
+  }, () => {
     // Update status to let user know options were saved.
     var status = document.getElementById('status');
     status.textContent = 'Options saved.';
-    setTimeout(_ => {
+    setTimeout(() => {
       status.textContent = '';
     }, 750);
   });
@@ -23,6 +25,7 @@ function restore_options() {
     port_number: 8888,
     debug_mode: false
   }, (items) => {
+    document.getElementById('hostname').value = items.hostname;
     document.getElementById('port-number').value = items.port_number;
     document.getElementById('debug-mode').checked = items.debug_mode;
   });
