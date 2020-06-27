@@ -1,4 +1,5 @@
-BluPrntr
+<img src="./bluprntr-chrome-extension/images/icon48.png">
+BLUPRNTR
 ========
 
 A Chrome extension (and local server) that saves your Bluprint classes to disk.
@@ -26,12 +27,19 @@ This application uses [Yarn](https://yarnpkg.com/).
 Instructions
 ------------
 
-If you are not familiar with the command line, please see this [Codedemy article](https://www.codecademy.com/articles/command-line-setup).
+If you are not familiar with the command line interface (CLI), provided are an introduction to the CLI in
+[Windows](https://programminghistorian.org/en/lessons/intro-to-powershell#open-powershell), and in the
+[Linux & Mac](https://www.codecademy.com/articles/command-line-setup) OS.
 
 ### 1. Install the Chrome Extension
 
-A chrome extension is provided with the project in the folder `bluprntr-chrome-extension/`.
-The extension must manually be installed: [Installing the BluPrntr Chrome extension](#loading-the-bluprntr-chrome-extension).
+A Chrome extension is provided with the project in the folder `bluprntr-chrome-extension/`.
+Chrome extensions can be loaded by navigating to the url `chrome://extensions` from the browser.
+Use the **Load unpacked** button to manually load the folder `bluprntr-chrome-extension/`.
+
+<center><img src="./images/bluprntr-chrome-extensions-marked.png" height="50%" width="50%"></center>
+
+Detailed [instructions](#installing-the-bluprntr-chrome-extension).
 
 ### 2. Install Bluprntr
 
