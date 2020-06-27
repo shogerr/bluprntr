@@ -36,18 +36,21 @@ chrome.devtools.network.onRequestFinished.addListener(request => {
       });
 
       if (tabs.length > 0) {
-        chrome.tabs.sendMessage(tabs[0].id, { action: "getDOM" }, response => {
+        chrome.tabs.sendMessage(tabs[0].id, { action: "bluprint" }, response => {
           if (!isOpen(ws)) {
             console.log("[bluprnt] Couldn't connect to server.");
             return;
           }
 
-          ws.send(JSON.stringify({
-            series: response.series,
-            episode: response.episode.replace(/: $ |:$/,''),
-            track: response.track,
+          let data = {
+            series: response.data.series,
+            episode: response.data.episode.replace(/: $ |:$/,''),
+            track: response.data.track,
             url: request.request.url,
-            resources: response.resources
+            resources: response.data.resources
+          };
+          ws.send(JSON.stringify({
+            data: data
           }));
         });
       } else {

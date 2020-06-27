@@ -1,5 +1,5 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action == "getDOM") {
+  if (request.action == "bluprint") {
     let resources = [];
     Array.from(document.querySelector("ul.VideoPage-materialLinks").getElementsByTagName("a")).forEach(el => {
       if (el.className === 'FileLink download-link') {
@@ -14,12 +14,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     let track = document.querySelector(trackQuery).innerText.trim();
     track = track ? parseInt(track) : -1;
 
-    sendResponse({
+    let data = {
       series: document.querySelector("h2[data-identifier='VideoPage-headline']").innerHTML.trim(),
       episode: document.querySelector("h2[data-identifier='data-video-page-episode-name']").innerHTML.trim(),
       track: track,
       resources: resources.length > 0 ? resources : {},
-      debug: {}
+    };
+    sendResponse({
+      data: data
     });
  }
  else

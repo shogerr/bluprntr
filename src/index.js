@@ -103,7 +103,7 @@ function performSetup(settings) {
   if (!titles_[0]) settings.save_data_file = false;
   if (!collection_[0]) settings.save_collection_file = false;
 
-  return {titles: titles_[1], collection: collection_[1]}
+  return {titles: new Map(titles_[1]), collection: collection_[1]}
 }
 
 function downloadResources(resources, path, settings) {
@@ -166,16 +166,22 @@ wss.on('connection', function connection(ws) {
   log.info ('The', blue ('Bluprint'), 'Chrome extension has connected!')
   ws.send('Connected to bluprntr server')
   ws.on('message', function incoming(message) {
-    let title = JSON.parse(message)
+    let title = JSON.parse(message).data
     log.maxDepth(3).darkGray ('[caught]', title)
+    // Decode special characters
     title.episode = entities.decode(title.episode)
     title.series = entities.decode(title.series)
+    // Create an ID for logging
     let id = title.series + "#" + title.episode
+    // Perform formatting on strings for title
     title.episode = formatTitleString(title.episode)
     title.series = formatTitleString(title.series)
+    // Set a filename
     let filename = `${title.series} - ${title.track.toString().padStart(2, '0')} - ${title.episode}`
+    // Remove spaces if necessary
     if (settings.replace_spaces)
       filename = filename.replace(/ /g, settings.character_map.get('.'))
+    // Set a folder for the download
     const seriesPath = `${downloadPath}/${title.series}`
 
     if (titles.has(id) && !titles.get(id).resources_downloaded) {
@@ -183,7 +189,9 @@ wss.on('connection', function connection(ws) {
         url: title.url,
         resources_downloaded: downloadResources(title.resources, seriesPath, settings)
       })
-      fs.writeFileSync(settings.data_file, JSON.stringify([...titles], null, 2), 'utf-8')
+      if (settings.save_data_file) {
+        fs.writeFileSync(settings.data_file, JSON.stringify([...titles], null, 2), 'utf-8')
+      }
     } else if (!titles.has(id)) {
       log(green ('[downloading]'), '(video)', { filename: filename, url: title.url })
       collection[title.series] = collection[title.series] || {}
@@ -214,12 +222,16 @@ wss.on('connection', function connection(ws) {
         resources_downloaded: downloadResources(title.resources, seriesPath, settings)
       })
 
-      fs.writeFileSync(settings.data_file, JSON.stringify([...titles], null, 2), 'utf-8', err => {
-        if (err) log.error (err)
-      })
-      fs.writeFileSync(settings.collection_file, JSON.stringify(collection, null, 2), 'utf-8', err => {
-        if (err) log.error (err)
-      })
+      if (settings.save_data_file) {
+        fs.writeFileSync(settings.data_file, JSON.stringify([...titles], null, 2), 'utf-8', err => {
+          if (err) log.error (err)
+        })
+      }
+      if (settings.save_collection_file) {
+        fs.writeFileSync(settings.collection_file, JSON.stringify(collection, null, 2), 'utf-8', err => {
+          if (err) log.error (err)
+        })
+      }
     }
   });
 });
