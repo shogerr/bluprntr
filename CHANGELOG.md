@@ -3,6 +3,14 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+[0.0.5] - 2020-06-27
+--------------------
+
+### Changed
+
+- Created helper.js for utility function.
+- Payload for server adjusted to match extension.
+
 [0.0.4] - 2020-06-25
 --------------------
 
