@@ -29,14 +29,13 @@ Instructions
 ------------
 
 If you are not familiar with the command line interface (CLI), provided are an introduction to the CLI in
-[Windows](https://programminghistorian.org/en/lessons/intro-to-powershell#open-powershell), and in the
+[Windows](https://programminghistorian.org/en/lessons/intro-to-powershell#open-powershell), and for the
 [Linux & Mac](https://www.codecademy.com/articles/command-line-setup) OS.
 
 ### 1. Install the Chrome Extension
 
 A Chrome extension is provided with the project in the folder `bluprntr-chrome-extension/`.
 Chrome extensions can be loaded by navigating to the url `chrome://extensions` from the browser.
-Use the **Load unpacked** button to manually load the folder `bluprntr-chrome-extension/`.
 
 <center><img src="./images/bluprntr-chrome-extensions-marked.png" height="50%" width="50%"></center>
 
