@@ -47,10 +47,10 @@ let settings = {
 
 // Performs the application setup
 function performSetup(settings) {
-  const LoadOrCreateData = filepath => {
+  const LoadOrCreateData = (filepath, data) => {
     if (fs.existsSync(filepath)) {
       try {
-        let contents = JSON.parse(fs.readFileSync(filepath, 'utf8'));
+        let contents = fs.readFileSync(filepath, 'utf8');
         return contents;
       } catch (e) {
         log.red (`There was a problem loading ${filepath}. Please check the integrity of its contents.`);
@@ -59,13 +59,21 @@ function performSetup(settings) {
         return undefined;
       }
     } else {
-      return undefined;
+      try {
+        log.yellow.info (`Creating "${filepath}".`)
+        fs.writeFileSync(filepath, data)
+        return true
+      } catch (e) {
+        log.error (`Couldn't create "${filepath}".`, e)
+        return undefined
+      }
     }
   };
   const loadFileData = (filepath, data) => {
-    let loaded = LoadOrCreateData(filepath);
-    if (loaded === undefined) return [false, data];
-    return [true, loaded];
+    let loaded = LoadOrCreateData(filepath, JSON.stringify(data));
+    if (loaded === undefined) return [false, JSON.parse(data)];
+    if (loaded === true) return [true, data];
+    return [true, JSON.parse(loaded)];
   };
   const findFolderOrCreate = folderPath => {
     if (!fs.existsSync(folderPath)) {
@@ -79,7 +87,7 @@ function performSetup(settings) {
 
   findFolderOrCreate(settings.download_path);
   findFolderOrCreate(settings.data_path);
-  let titles_ = loadFileData(settings.data_file, new Map());
+  let titles_ = loadFileData(settings.data_file, [...new Map()]);
   let collection_ = loadFileData(settings.collection_file, {});
   if (!titles_[0]) settings.save_data_file = false;
   if (!collection_[0]) settings.save_collection_file = false;
@@ -91,7 +99,7 @@ function performSetup(settings) {
 log (underline (`BluPrntr`))
 log.info (`Running on port ${settings.port}.`)
 log.info (`Downloading to: "${settings.download_path}".`)
-log.yellow.warn (`Application data can be found in, '${settings.data_path}'.`)
+log.yellow.info (`Application data can be found in, '${settings.data_path}'.`)
 log.darkGray.info ({settings: settings})
 
 // TODO refactor to fix this short-circuiting.
@@ -201,4 +209,4 @@ wss.on('connection', ws => {
 });
 
 
-module.exports = { downloadPath }
+module.exports = { downloadPath,  data: data }
