@@ -209,4 +209,7 @@ wss.on('connection', ws => {
 });
 
 
-module.exports = { downloadPath,  data: data }
+exports.getData = () => {
+  return data
+}
+exports.downloadPath = downloadPath

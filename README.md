@@ -47,10 +47,10 @@ The following commands will install the server, and are to be executed from a co
 cd ./bluprntr
 
 # Install bluprntr with npm,
-npm install --global
+npm install . --global
 
 # or use yarn.
-yarn global add
+yarn global add .
 ```
 
 ### 3. Start Bluprntr
